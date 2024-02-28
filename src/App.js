@@ -32,7 +32,7 @@ function Result() {
   );
 }
 
-function Game({ question }) {
+function Game({ question, onclickVariant }) {
   return (
     <>
       <div className="progress">
@@ -41,7 +41,8 @@ function Game({ question }) {
       <h1>{question.title}</h1>
       <ul>
           {
-              question.variants.map(text => <li key = {text}>{text}</li>)
+              question.variants.map((text, index) =>
+                  <li onClick={() => onclickVariant(index)} key = {text}>{text}</li>)
           }
       </ul>
     </>
@@ -53,9 +54,14 @@ function App() {
     const [step, setStep] = React.useState(0)
     const question = questions[step];
 
+    const onclickVariant = (index) => {
+        console.log(step, index)
+        setStep(step + 1)
+    }
+
     return (
     <div className="App">
-      <Game question={question}/>
+      <Game question={question} onclickVariant={onclickVariant}/>
       {/* <Result /> */}
     </div>
   );
